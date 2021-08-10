@@ -28,20 +28,7 @@ public class ActivatableDoor : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update ()
-    {
-        if (meshRenderer.enabled) {
-            // Check if this door has a DoorTrigger object //
-            if (doorTrigger != null)
-            {
-                // All 4 buttons found //
-                if (buttonsTriggered == 4)
-                {
-                    StartCoroutine(RemoveDoor(2));
-                }
-            }
-        }
-    }
+    
 
     IEnumerator RemoveDoor(float _timeBeforeRemoval)
     {
@@ -57,8 +44,23 @@ public class ActivatableDoor : MonoBehaviour {
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag.Equals("Button"))
+        {
+            Destroy(gameObject);
+        }
+
+        
+            if (meshRenderer.enabled)
             {
-                Destroy(gameObject);
+                // Check if this door has a DoorTrigger object //
+                if (doorTrigger != null)
+                {
+                    // All 4 buttons found //
+                    if (collision.gameObject.name.Equals("ButtonPanel5") && collision.gameObject.name.Equals("ButtonPanel2") && collision.gameObject.name.Equals("ButtonPanel1") && collision.gameObject.name.Equals("ButtonPanel8"))
+                    {
+
+                        StartCoroutine(RemoveDoor(2));
+                    }
+                }
             }
     }
 }
