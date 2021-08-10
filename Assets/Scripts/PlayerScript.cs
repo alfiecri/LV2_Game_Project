@@ -31,7 +31,7 @@ public class PlayerScript : MonoBehaviour
     private bool canDamage;
     private AudioSource audioSource;
     private GameObject camera = null;
-    
+
 
     // Use this for initialization
     void Start()

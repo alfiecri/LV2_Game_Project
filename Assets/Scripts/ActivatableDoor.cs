@@ -4,21 +4,25 @@ using UnityEngine;
 using UnityEditor;
 
 public class ActivatableDoor : MonoBehaviour {
-    [Tooltip("Amount of Score to remove door")]
-    public int amountOfScore;
+    [Tooltip("Number of buttons triggered")]
+    public int buttonsTriggered;
 
     [Tooltip("To remove door by a doorTrigger")]
     public DoorTrigger doorTrigger;
 
     [Header("Game Audio Clips")]
     public AudioClip doorSound;
-    
+
+    public GameObject buttons;
+
     private AudioSource audioSource;
     private MeshRenderer meshRenderer;
 
     // Use this for initialization
     void Start ()
     {
+        buttonsTriggered = 0;
+
         audioSource = GetComponent<AudioSource>();
         meshRenderer = GetComponent<MeshRenderer>();
     }
@@ -30,16 +34,8 @@ public class ActivatableDoor : MonoBehaviour {
             // Check if this door has a DoorTrigger object //
             if (doorTrigger != null)
             {
-                // check is triggered and enough score //
-                if (doorTrigger.isTriggered && GameManager.Instance.GetScore() >= amountOfScore)
-                {
-                    StartCoroutine(RemoveDoor(2));
-                }
-            }
-            else
-            {
-                // Only score based //
-                if (GameManager.Instance.GetScore() >= amountOfScore)
+                // All 4 buttons found //
+                if (buttonsTriggered == 4)
                 {
                     StartCoroutine(RemoveDoor(2));
                 }
@@ -56,5 +52,13 @@ public class ActivatableDoor : MonoBehaviour {
 
         yield return new WaitForSeconds(_timeBeforeRemoval);
         gameObject.SetActive(false);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag.Equals("Button"))
+            {
+                Destroy(gameObject);
+            }
     }
 }

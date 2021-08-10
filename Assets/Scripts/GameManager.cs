@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour {
+public class GameManager : MonoBehaviour
+{
     public static GameManager Instance;
 
     [Header("Game variables")]
@@ -35,13 +36,15 @@ public class GameManager : MonoBehaviour {
     public string SceneName;
     [HideInInspector]
     public bool isGameOver;
-    
+
     private int score;
     private AudioSource audioSource;
 
     // Use this for initialization
-    void Awake () {
-        if (Instance == null) {
+    void Awake()
+    {
+        if (Instance == null)
+        {
             Instance = this;
         }
 
@@ -51,20 +54,23 @@ public class GameManager : MonoBehaviour {
 
         GameOverUI.SetActive(false);
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
         if (isGameOver)
             return;
 
         UpdateTimeLeft();
 
-        if (Input.GetKeyDown(KeyCode.F1)) {
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
             SetGameOver(true);
         }
     }
 
-    public void UpdateScore(int _score, AudioClip audioClip) {
+    public void UpdateScore(int _score, AudioClip audioClip)
+    {
         score += _score;
         ScoreTextbox.text = ScoreTextPrefix + score;
 
@@ -104,18 +110,19 @@ public class GameManager : MonoBehaviour {
         int minutes = (int)RoundTime / 60;
         int seconds = (int)RoundTime - 60 * minutes;
         int milliseconds = (int)(100 * (RoundTime - minutes * 60 - seconds));
-        
+
         TimeLeftTextbox.text = TimeLeftTextPrefix + '\n' + string.Format("{0:00}:{1:00}:{2:00}", minutes, seconds, milliseconds);
     }
 
-    public void SetGameOver(bool isWin) {
+    public void SetGameOver(bool isWin)
+    {
 
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         GameObject.Find("FPSPlayer").GetComponent<UnityStandardAssets.Characters.FirstPerson.FirstPersonController>().enabled = false;
         isGameOver = true;
         GameOverUI.SetActive(true);
-        
+
         if (isWin)
         {
             audioSource.PlayOneShot(GameWinSound);
@@ -126,7 +133,8 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    public void ResetGame() {
+    public void ResetGame()
+    {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
