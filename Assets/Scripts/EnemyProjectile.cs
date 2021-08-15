@@ -28,12 +28,10 @@ public class EnemyProjectile : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+
+    void OnCollisionEnter(Collision collision)
     {
-        if (other.CompareTag("Player"))
-        {
-            DestroyBullet();
-        }
+        DestroyBullet();
     }
 
     void DestroyBullet()

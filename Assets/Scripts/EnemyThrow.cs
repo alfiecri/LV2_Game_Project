@@ -19,7 +19,7 @@ public class EnemyThrow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (timeBtwShots <= 10)
+        if (timeBtwShots <= 0)
         {
             Instantiate(projectile, transform.position, Quaternion.identity);
             timeBtwShots = startTimeBtwShots;

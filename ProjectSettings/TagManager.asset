@@ -11,6 +11,9 @@ TagManager:
   - Cabinet
   - Crowbar
   - Button
+  - Table
+  - Chair
+  - Bed
   layers:
   - Default
   - TransparentFX

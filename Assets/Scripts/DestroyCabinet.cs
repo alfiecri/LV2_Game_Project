@@ -5,33 +5,34 @@ using UnityEngine;
 
 public class DestroyCabinet : MonoBehaviour
 {
-    public float cabinetHP = 5;
+    bool PlayerCol = false;
 
-    // Start is called before the first frame update
-    public void TakeDamage(float amount)
+    public GameObject Health;
+
+    void Update()
     {
-        cabinetHP -= amount;
-        if (cabinetHP <= 0)
+        
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
         {
-            Destroy(gameObject);
+            PlayerCol = true;
+        }
+        else
+        {
+            PlayerCol = false;
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnMouseDown()
     {
-
+        if (PlayerCol == true)
+        {
+            Destroy(gameObject);
+            Instantiate(Health, transform.position, Quaternion.identity);
+        }
     }
-
-    void OnTriggerEnter(Collider col)
-    {
-        Destroy(col.gameObject);
-    }
-
-    void OnTriggerEnter()
-    {
-        Destroy(gameObject);
-    }
-
 }
     

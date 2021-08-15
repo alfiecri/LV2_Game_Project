@@ -21,8 +21,6 @@ public class ActivatableDoor : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-        buttonsTriggered = 0;
-
         audioSource = GetComponent<AudioSource>();
         meshRenderer = GetComponent<MeshRenderer>();
     }
@@ -41,26 +39,25 @@ public class ActivatableDoor : MonoBehaviour {
         gameObject.SetActive(false);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.tag.Equals("Button"))
+        if (other.gameObject.tag.Equals("Button"))
         {
             Destroy(gameObject);
         }
 
-        
-            if (meshRenderer.enabled)
+        if (meshRenderer.enabled)
+        {
+            // Check if this door has a DoorTrigger object //
+            if (doorTrigger != null)
             {
-                // Check if this door has a DoorTrigger object //
-                if (doorTrigger != null)
+                // All 4 buttons found //
+                if (other.gameObject.name.Equals("ButtonPanel5") && other.gameObject.name.Equals("ButtonPanel2") && other.gameObject.name.Equals("ButtonPanel1") && other.gameObject.name.Equals("ButtonPanel8"))
                 {
-                    // All 4 buttons found //
-                    if (collision.gameObject.name.Equals("ButtonPanel5") && collision.gameObject.name.Equals("ButtonPanel2") && collision.gameObject.name.Equals("ButtonPanel1") && collision.gameObject.name.Equals("ButtonPanel8"))
-                    {
 
-                        StartCoroutine(RemoveDoor(2));
-                    }
+                    StartCoroutine(RemoveDoor(2));
                 }
             }
+        }
     }
 }
